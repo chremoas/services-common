@@ -32,12 +32,12 @@ func (c *Configuration) Load(filename string) error {
 
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return errors.New("Could not read application.yaml for configuration data.")
+		return errors.New("Could not read " + filename + " for configuration data.")
 	}
 
 	err = yaml.Unmarshal([]byte(data), c)
 	if err != nil {
-		return errors.New("Could not unmarshall application.yaml as yaml")
+		return errors.New("Could not unmarshall " + filename + " as yaml")
 	}
 
 	return nil
