@@ -8,6 +8,6 @@ import (
 
 func TestReadConfigFile(t *testing.T) {
 	conf := Configuration{}
-	conf.load('application.dist.yaml')
+	conf.load("application.dist.yaml")
 	fmt.Print(conf)
 }
