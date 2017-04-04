@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestReadConfigFile(t *testing.T) {
+func TestConfiguration_Load(t *testing.T) {
 	conf := Configuration{}
 	conf.Load("application.dist.yaml")
 	if conf.Namespace != "your.namespace.to.register" {
