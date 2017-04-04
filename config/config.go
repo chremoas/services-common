@@ -1,9 +1,9 @@
 package config
 
 import (
-	"io/ioutil"
-	"gopkg.in/yaml.v2"
 	"errors"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
 )
 
 type Config interface {
@@ -12,9 +12,9 @@ type Config interface {
 
 type Configuration struct {
 	initialized bool
-	Namespace string
-	Name      string
-	Database  struct {
+	Namespace   string
+	Name        string
+	Database    struct {
 		Driver         string
 		Protocol       string
 		Host           string

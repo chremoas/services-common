@@ -1,8 +1,8 @@
 package config
 
 import (
-	"fmt"
 	"errors"
+	"fmt"
 )
 
 func (c Configuration) NewConnectionString() (string, error) {
