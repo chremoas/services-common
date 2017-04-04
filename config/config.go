@@ -10,20 +10,18 @@ type Config interface {
 }
 
 type Configuration struct {
-	Application struct {
-		Namespace string
-		Name      string
-		Database  struct {
-			Driver         string
-			Protocol       string
-			Host           string
-			Port           uint
-			Database       string
-			Username       string
-			Password       string
-			Options        string
-			MaxConnections int `yaml:"maxConnections"`
-		}
+	Namespace string
+	Name      string
+	Database  struct {
+		Driver         string
+		Protocol       string
+		Host           string
+		Port           uint
+		Database       string
+		Username       string
+		Password       string
+		Options        string
+		MaxConnections int `yaml:"maxConnections"`
 	}
 }
 
