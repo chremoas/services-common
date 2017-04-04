@@ -25,6 +25,11 @@ type Configuration struct {
 		Options        string
 		MaxConnections int `yaml:"maxConnections"`
 	}
+	Application struct {
+		BotToken         string `yaml:"botToken"`
+		AuthSrvNamespace string `yaml:"authSrvNamespace"`
+		DiscordServerId  string `yaml:"discordServerId"`
+	}
 }
 
 func (c *Configuration) Load(filename string) error {
