@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/micro/go-micro"
 	"errors"
+	"github.com/micro/go-micro"
 )
 
 func (c Configuration) NewService(version string) (micro.Service, error) {
@@ -11,7 +11,7 @@ func (c Configuration) NewService(version string) (micro.Service, error) {
 	}
 
 	return micro.NewService(
-		micro.Name(c.Namespace + "." + c.Name),
+		micro.Name(c.Namespace+"."+c.Name),
 		micro.Version(version),
 	), nil
 }

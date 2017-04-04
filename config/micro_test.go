@@ -1,8 +1,8 @@
 package config
 
 import (
-	"testing"
 	"github.com/micro/go-micro"
+	"testing"
 )
 
 func TestConfiguration_NewService(t *testing.T) {

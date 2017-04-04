@@ -12,7 +12,7 @@ func TestConfiguration_NewConnectionString(t *testing.T) {
 		t.Errorf("%s", err)
 	}
 	test_DSN := "username:password@tcp(hostname:3306)/database"
-	if DSN !=  test_DSN {
+	if DSN != test_DSN {
 		t.Errorf("Provided DSN (%s) doesn't match test DSN (%s)", DSN, test_DSN)
 	}
 }
