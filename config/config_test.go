@@ -2,11 +2,10 @@ package config
 
 import (
 	"testing"
-	"github.com/abaeve/auth-common/config"
 )
 
 func TestReadConfigFile(t *testing.T) {
-	conf := config.Configuration{}
+	conf := Configuration{}
 	conf.Load("application.dist.yaml")
 	if conf.Namespace != "your.namespace.to.register" {
 		t.Error()

@@ -3,8 +3,6 @@ package config
 import (
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
-	"github.com/micro/go-micro"
-	"fmt"
 )
 
 type Config interface {
@@ -40,33 +38,4 @@ func (c *Configuration) Load(filename string) {
 	if err != nil {
 		panic("Could not unmarshall application.yaml as yaml")
 	}
-}
-
-func (c Configuration) NewService(version string) micro.Service {
-	if !c.initialized {
-		panic("Configuration not initialized, call Load() before calling this.")
-	}
-
-	return micro.NewService(
-		micro.Name(c.Namespace + "." + c.Name),
-		micro.Version(version),
-	)
-}
-
-func (c Configuration) NewConnectionString() string {
-	if !c.initialized {
-		panic("Configuration not initialized, call Load() before calling this.")
-	}
-
-	return c.Database.Username +
-		":" +
-		c.Database.Password +
-		"@" +
-		c.Database.Protocol +
-		"(" +
-		c.Database.Host +
-		":" +
-		fmt.Sprintf("%d", c.Database.Port) +
-		")/" +
-		c.Database.Database
 }
