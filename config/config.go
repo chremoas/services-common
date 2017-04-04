@@ -5,6 +5,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+type Config interface {
+	Load(filename string)
+}
+
 type Configuration struct {
 	Application struct {
 		Namespace string
@@ -23,7 +27,7 @@ type Configuration struct {
 	}
 }
 
-func (c *Configuration) load(filename string) bool {
+func (c *Configuration) Load(filename string) {
 	data, err := ioutil.ReadFile(filename)
 
 	//TODO: Candidate for shared function for all my services.
@@ -36,5 +40,5 @@ func (c *Configuration) load(filename string) bool {
 		panic("Could not unmarshall application.yaml as yaml")
 	}
 
-	return true
+	return
 }
