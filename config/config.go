@@ -28,7 +28,6 @@ type Configuration struct {
 func (c *Configuration) Load(filename string) {
 	data, err := ioutil.ReadFile(filename)
 
-	//TODO: Candidate for shared function for all my services.
 	if err != nil {
 		panic("Could not read application.yaml for configuration data.")
 	}
@@ -37,6 +36,4 @@ func (c *Configuration) Load(filename string) {
 	if err != nil {
 		panic("Could not unmarshall application.yaml as yaml")
 	}
-
-	return
 }
