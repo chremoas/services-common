@@ -1,10 +1,13 @@
 package config
 
-import "fmt"
+import (
+	"fmt"
+	"errors"
+)
 
-func (c Configuration) NewConnectionString() string {
+func (c Configuration) NewConnectionString() (string, error) {
 	if !c.initialized {
-		panic("Configuration not initialized, call Load() before calling this.")
+		return "", errors.New("Configuration not initialized, call Load() before calling this.")
 	}
 
 	return c.Database.Username +
@@ -17,5 +20,5 @@ func (c Configuration) NewConnectionString() string {
 		":" +
 		fmt.Sprintf("%d", c.Database.Port) +
 		")/" +
-		c.Database.Database
+		c.Database.Database, nil
 }
