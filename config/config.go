@@ -3,6 +3,7 @@ package config
 import (
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
+	"errors"
 )
 
 type Config interface {
@@ -26,16 +27,18 @@ type Configuration struct {
 	}
 }
 
-func (c *Configuration) Load(filename string) {
+func (c *Configuration) Load(filename string) error {
 	c.initialized = true
 
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		panic("Could not read application.yaml for configuration data.")
+		return errors.New("Could not read application.yaml for configuration data.")
 	}
 
 	err = yaml.Unmarshal([]byte(data), c)
 	if err != nil {
-		panic("Could not unmarshall application.yaml as yaml")
+		return errors.New("Could not unmarshall application.yaml as yaml")
 	}
+
+	return nil
 }
