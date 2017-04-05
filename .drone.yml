@@ -2,9 +2,8 @@ pipeline:
   build:
     image: golang
     commands:
-      - go get
-      - go build
-      - go test
+      - go get github.com/mattn/goveralls
+      - - $HOME/gopath/bin/goveralls -service=travis-ci
 
 services:
   postgres:
