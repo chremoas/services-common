@@ -11,50 +11,65 @@ func TestConfiguration_Load(t *testing.T) {
 	}
 
 	if conf.Namespace != "your.namespace.to.register" {
-		t.Errorf("Namespace unset")
+		t.Error("Namespace unset")
 	}
 	if conf.Name != "yourappname" {
-		t.Errorf("Name unset")
+		t.Error("Name unset")
 	}
 	if conf.Database.Driver != "mysql" {
-		t.Errorf("Database.Driver unset")
+		t.Error("Database.Driver unset")
 	}
 	if conf.Database.Protocol != "tcp" {
-		t.Errorf("Database.Protocol unset")
+		t.Error("Database.Protocol unset")
 	}
 	if conf.Database.Host != "hostname" {
-		t.Errorf("Database.Host unset")
+		t.Error("Database.Host unset")
 	}
 	if conf.Database.Port != 3306 {
-		t.Errorf("Database.Port unset")
+		t.Error("Database.Port unset")
 	}
 	if conf.Database.Database != "database" {
-		t.Errorf("Database.Database unset")
+		t.Error("Database.Database unset")
 	}
 	if conf.Database.Username != "username" {
-		t.Errorf("Database.Username unset")
+		t.Error("Database.Username unset")
 	}
 	if conf.Database.Password != "password" {
-		t.Errorf("Database.Password unset")
+		t.Error("Database.Password unset")
 	}
 	if conf.Database.Options != "options" {
-		t.Errorf("Database.Options unset")
+		t.Error("Database.Options unset")
 	}
 	if conf.Database.MaxConnections != 5 {
-		t.Errorf("Database.MaxConnections unset")
+		t.Error("Database.MaxConnections unset")
+	}
+	if conf.OAuth.ClientId != "client_id" {
+		t.Error("OAuth.ClientId unset")
+	}
+	if conf.OAuth.ClientSecret != "client_secret" {
+		t.Error("OAuth.ClientSecret unset")
+	}
+	if conf.OAuth.CallBackUrl != "callback_url" {
+		t.Error("OAuth.CallBackUrl unset")
+	}
+	if conf.Net.ListenHost != "localhost" {
+		t.Error("Net.ListenHost unset")
+	}
+	if conf.Net.ListenPort != 80 {
+		t.Error("Net.ListenPort unset")
 	}
 }
 
 func TestConfiguration_Load_NoFile(t *testing.T) {
 	conf := Configuration{}
 	if err := conf.Load("application.nofile.yaml"); err == nil {
-		t.Errorf("No error from Load() with no file")
+		t.Error("No error from Load() with no file")
 	}
 }
 
 func TestConfiguration_Load_InvalidFile(t *testing.T) {
 	conf := Configuration{}
 	if err := conf.Load("application.invalid.yaml"); err == nil {
-		t.Errorf("No error from Load() with invalid file")
+		t.Error("No error from Load() with invalid file")
 	}
 }

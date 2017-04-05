@@ -10,3 +10,10 @@ database:
   password: password
   options: options
   maxConnections: 5
+oauth:
+  clientId: client_id
+  clientSecret: client_secret
+  callBackUrl: callback_url
+net:
+  listenHost: localhost
+  listenPort: 80

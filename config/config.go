@@ -30,6 +30,15 @@ type Configuration struct {
 		AuthSrvNamespace string `yaml:"authSrvNamespace"`
 		DiscordServerId  string `yaml:"discordServerId"`
 	}
+	OAuth struct {
+		ClientId     string `yaml:"clientId"`
+		ClientSecret string `yaml:"clientSecret"`
+		CallBackUrl  string `yaml:"callBackUrl"`
+	} `yaml:"oauth"`
+	Net struct {
+		ListenHost string `yaml:"listenHost"`
+		ListenPort int `yaml:"listenPort"`
+	}
 }
 
 func (c *Configuration) Load(filename string) error {
