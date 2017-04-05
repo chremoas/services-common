@@ -3,3 +3,6 @@
 
 # services-common
 Common functionally shared between all the other pieces
+
+# Drone
+[![Build Status](http://vps124874.vps.ovh.ca:8000/api/badges/abaeve/services-common/status.svg)](http://vps124874.vps.ovh.ca:8000/abaeve/services-common)
