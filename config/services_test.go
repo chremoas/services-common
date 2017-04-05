@@ -2,7 +2,6 @@ package config
 
 import (
 	"testing"
-	"github.com/micro/go-micro"
 )
 
 func TestConfiguration_AuthServiceName(t *testing.T) {
