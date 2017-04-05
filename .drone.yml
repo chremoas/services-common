@@ -2,7 +2,7 @@ pipeline:
   build:
     image: golang:1.8
     commands:
-      - ls /
+      - export GOPATH=/:${GOPATH}
       - go get github.com/mattn/goveralls
       - goveralls -service=drone.io
 
