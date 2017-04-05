@@ -3,7 +3,7 @@ pipeline:
     image: golang:1.8
     commands:
       - go get github.com/mattn/goveralls
-      - goveralls -service=drone
+      - goveralls
 
 services:
   postgres:
