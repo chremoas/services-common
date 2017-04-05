@@ -58,6 +58,9 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.Net.ListenPort != 80 {
 		t.Error("Net.ListenPort unset")
 	}
+	if conf.ServiceNames.AuthSrv != "auth-srv" {
+		t.Error("ServiceNames.AuthSrv unset")
+	}
 }
 
 func TestConfiguration_Load_NoFile(t *testing.T) {
@@ -65,11 +68,19 @@ func TestConfiguration_Load_NoFile(t *testing.T) {
 	if err := conf.Load("application.nofile.yaml"); err == nil {
 		t.Error("No error from Load() with no file")
 	}
+
+	if conf.initialized {
+		t.Error("conf failed to load but said it was initialized.")
+	}
 }
 
 func TestConfiguration_Load_InvalidFile(t *testing.T) {
 	conf := Configuration{}
 	if err := conf.Load("application.invalid.yaml"); err == nil {
 		t.Error("No error from Load() with invalid file")
+	}
+
+	if conf.initialized {
+		t.Error("conf failed to load but said it was initialized.")
 	}
 }

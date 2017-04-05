@@ -17,3 +17,5 @@ oauth:
 net:
   listenHost: localhost
   listenPort: 80
+serviceNames:
+  authSrv: auth-srv

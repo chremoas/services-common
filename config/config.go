@@ -39,11 +39,12 @@ type Configuration struct {
 		ListenHost string `yaml:"listenHost"`
 		ListenPort int `yaml:"listenPort"`
 	}
+	ServiceNames struct {
+		AuthSrv string `yaml:"authSrv"`
+	} `yaml:"serviceNames"`
 }
 
 func (c *Configuration) Load(filename string) error {
-	c.initialized = true
-
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return errors.New("Could not read " + filename + " for configuration data.")
@@ -53,6 +54,8 @@ func (c *Configuration) Load(filename string) error {
 	if err != nil {
 		return errors.New("Could not unmarshall " + filename + " as yaml")
 	}
+
+	c.initialized = true
 
 	return nil
 }
