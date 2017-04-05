@@ -25,7 +25,7 @@ type Configuration struct {
 		Options        string
 		MaxConnections int `yaml:"maxConnections"`
 	}
-	Application struct {
+	Bot struct {
 		BotToken         string `yaml:"botToken"`
 		AuthSrvNamespace string `yaml:"authSrvNamespace"`
 		DiscordServerId  string `yaml:"discordServerId"`
