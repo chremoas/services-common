@@ -22,8 +22,8 @@ func TestConfiguration_NewService_NoConfLoaded(t *testing.T) {
 	service, err := conf.NewService("1.1.1")
 	if err == nil {
 		if _, ok := service.(micro.Service); ok {
-			t.Errorf("Error is nil and yet we have a valid service?")
+			t.Error("Error is nil and yet we have a valid service?")
 		}
-		t.Errorf("Error set to nil, at least we don't have a valid service")
+		t.Error("Error set to nil, at least we don't have a valid service")
 	}
 }
