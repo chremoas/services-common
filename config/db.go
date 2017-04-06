@@ -20,5 +20,7 @@ func (c Configuration) NewConnectionString() (string, error) {
 		":" +
 		fmt.Sprintf("%d", c.Database.Port) +
 		")/" +
-		c.Database.Database, nil
+		c.Database.Database +
+		"?" +
+		c.Database.Options, nil
 }
