@@ -61,6 +61,15 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.ServiceNames.AuthSrv != "auth-srv" {
 		t.Error("ServiceNames.AuthSrv unset")
 	}
+	if conf.Bot.DiscordServerId != "You bot token here, do not prepend Bot... we'll do that for you" {
+		t.Error("Bot.DiscordServerId unset")
+	}
+	if conf.Bot.AuthSrvNamespace != "namespace that the auth-srv instance lives in" {
+		t.Error("Bot.AuthSrvNamespace unset")
+	}
+	if conf.Bot.BotToken != "You bot token here, do not prepend Bot... we'll do that for you" {
+		t.Error("Bot.BotToken unset")
+	}
 }
 
 func TestConfiguration_Load_NoFile(t *testing.T) {

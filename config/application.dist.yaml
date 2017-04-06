@@ -10,6 +10,10 @@ database:
   password: password
   options: options
   maxConnections: 5
+bot:
+  botToken: You bot token here, do not prepend Bot... we'll do that for you
+  authSrvNamespace: namespace that the auth-srv instance lives in
+  discordServerId: https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-server-ID-
 oauth:
   clientId: client_id
   clientSecret: client_secret
