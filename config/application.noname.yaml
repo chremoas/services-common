@@ -1,5 +1,3 @@
-namespace: your.namespace.to.register
-name:
 database:
   driver: mysql
   protocol: tcp

@@ -4,10 +4,14 @@ import (
 	"errors"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"github.com/micro/go-micro"
 )
 
 type Config interface {
-	Load(filename string)
+	Load(filename string) error
+	NewConnectionString() (string, error)
+	NewService(version, defaultName string) (micro.Service, error)
+	AuthServiceName() (string, error)
 }
 
 type Configuration struct {
@@ -53,6 +57,11 @@ func (c *Configuration) Load(filename string) error {
 	err = yaml.Unmarshal([]byte(data), c)
 	if err != nil {
 		return errors.New("Could not unmarshall " + filename + " as yaml")
+	}
+
+	// Let's set a default namespace because a lot of people don't care what it actually is
+	if c.Namespace == "" {
+		c.Namespace = "com.aba-eve"
 	}
 
 	c.initialized = true

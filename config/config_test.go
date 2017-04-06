@@ -61,7 +61,7 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.ServiceNames.AuthSrv != "auth-srv" {
 		t.Error("ServiceNames.AuthSrv unset")
 	}
-	if conf.Bot.DiscordServerId != "You bot token here, do not prepend Bot... we'll do that for you" {
+	if conf.Bot.DiscordServerId != "https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-server-ID-" {
 		t.Error("Bot.DiscordServerId unset")
 	}
 	if conf.Bot.AuthSrvNamespace != "namespace that the auth-srv instance lives in" {
@@ -91,5 +91,16 @@ func TestConfiguration_Load_InvalidFile(t *testing.T) {
 
 	if conf.initialized {
 		t.Error("conf failed to load but said it was initialized.")
+	}
+}
+
+func TestConfiguration_Load_NoNamespace(t *testing.T) {
+	conf := Configuration{}
+	if err := conf.Load("application.noname.yaml"); err != nil {
+		t.Errorf("Error from Load(): %s", err)
+	}
+
+	if conf.Namespace == "" {
+		t.Error("Namespace not set to a default")
 	}
 }
