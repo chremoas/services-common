@@ -23,3 +23,5 @@ net:
   listenPort: 80
 serviceNames:
   authSrv: auth-srv
+discord:
+  inviteUrl: url to be used for invitations

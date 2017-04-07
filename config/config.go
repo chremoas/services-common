@@ -2,9 +2,9 @@ package config
 
 import (
 	"errors"
+	"github.com/micro/go-micro"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	"github.com/micro/go-micro"
 )
 
 type Config interface {
@@ -41,11 +41,14 @@ type Configuration struct {
 	} `yaml:"oauth"`
 	Net struct {
 		ListenHost string `yaml:"listenHost"`
-		ListenPort int `yaml:"listenPort"`
+		ListenPort int    `yaml:"listenPort"`
 	}
 	ServiceNames struct {
 		AuthSrv string `yaml:"authSrv"`
 	} `yaml:"serviceNames"`
+	Discord struct {
+		InviteUrl string `yaml:"inviteUrl"`
+	} `yaml:"discord"`
 }
 
 func (c *Configuration) Load(filename string) error {

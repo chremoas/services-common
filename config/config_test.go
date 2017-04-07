@@ -70,6 +70,9 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.Bot.BotToken != "You bot token here, do not prepend Bot... we'll do that for you" {
 		t.Error("Bot.BotToken unset")
 	}
+	if conf.Discord.InviteUrl != "url to be used for invitations" {
+		t.Error("Discord.InviteUrl unset")
+	}
 }
 
 func TestConfiguration_Load_NoFile(t *testing.T) {
