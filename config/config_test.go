@@ -73,6 +73,12 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.Discord.InviteUrl != "url to be used for invitations" {
 		t.Error("Discord.InviteUrl unset")
 	}
+	if conf.Registry.Hostname != "localhost" {
+		t.Error("Registry.Hostname unset")
+	}
+	if conf.Registry.Port == 0 {
+		t.Error("Registry.Port unset")
+	}
 }
 
 func TestConfiguration_Load_NoFile(t *testing.T) {

@@ -25,3 +25,6 @@ serviceNames:
   authSrv: auth-srv
 discord:
   inviteUrl: url to be used for invitations
+registry:
+  hostname: localhost
+  port: 8500

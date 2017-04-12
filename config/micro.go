@@ -4,28 +4,56 @@ import (
 	"errors"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/registry"
+	"github.com/prometheus/common/log"
+	"strconv"
 )
 
-var configurationFile string
+type InitFunc func(configuration *Configuration) error
+
+var svc micro.Service
+var confFile string
 
 // Builds and inits a new micro.Service object for use.  The initFunc functor being asked for will be inserted
 // into the services options as a BeforeStart which will be called DURING the service.Run invocation but BEFORE the
 // service is fully up and operational.  All of your initialization code that you need should go into this initFunc.
 // If you don't need init code then feel free to use the NilInit function exported out of this package.
-func NewService(version string, initFunc func(configuration *Configuration) error) micro.Service {
+func NewService(version, defaultName string, initFunc InitFunc) micro.Service {
 	service := micro.NewService(
 		micro.Version(version),
 		micro.BeforeStart(
 			func() error {
-				configuration := Configuration{}
+				conf := Configuration{}
 
-				configuration.Load(configurationFile)
+				conf.Load(confFile)
 
-				if !configuration.initialized {
-					return errors.New("Configuration not initialized, call Load() before calling this.")
+				if !conf.initialized {
+					err := errors.New("Configuration not initialized, check your yaml format")
+					log.Error(err)
+					return err
 				}
 
-				return initFunc(&configuration)
+				if conf.Name == "" {
+					if defaultName == "" {
+						err := errors.New("No name in configuration yaml and no default name")
+						log.Error(err)
+						return err
+					}
+					conf.Name = defaultName
+				}
+
+				svc.Init(micro.Name(conf.Namespace + "." + conf.Name))
+				svc.Init(
+					micro.Registry(
+						registry.NewRegistry(
+							registry.Addrs(
+								conf.Registry.Hostname + ":" + strconv.Itoa(conf.Registry.Port),
+							),
+						),
+					),
+				)
+
+				return initFunc(&conf)
 			},
 		),
 		micro.Flags(
@@ -34,16 +62,18 @@ func NewService(version string, initFunc func(configuration *Configuration) erro
 				Usage:       "The yaml configuration file for the service being loaded",
 				Value:       "/etc/auth-srv/application.yaml",
 				EnvVar:      "CONFIGURATION_FILE",
-				Destination: &configurationFile,
+				Destination: &confFile,
 			},
 		),
 	)
 
 	service.Init()
 
+	svc = service
+
 	return service
 }
 
-func NilInit(configuration *Configuration) error {
+func NilInit(conf *Configuration) error {
 	return nil
 }

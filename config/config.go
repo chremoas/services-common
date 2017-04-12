@@ -49,6 +49,10 @@ type Configuration struct {
 	Discord struct {
 		InviteUrl string `yaml:"inviteUrl"`
 	} `yaml:"discord"`
+	Registry struct {
+		Hostname string `yaml:"hostname"`
+		Port     int    `yaml:"port"`
+	} `yaml:"registry"`
 }
 
 func (c *Configuration) Load(filename string) error {
