@@ -9,11 +9,10 @@ import (
 )
 
 func TestConfiguration_NewService(t *testing.T) {
-	os.Setenv("CONFIGURATION_FILE", "application.dist.yaml")
-	os.Args = []string{os.Args[0]}
+	os.Args = []string{os.Args[0], "--configuration_file=application.dist.yaml"}
 	cmd.DefaultCmd = cmd.NewCmd()
 
-	service := NewService("1.1.1", errInit)
+	service := NewService("1.1.1", "defaultName", errInit)
 	if _, ok := service.(micro.Service); !ok {
 		t.Error("service is not a micro.Service!")
 	}
@@ -24,11 +23,38 @@ func TestConfiguration_NewService(t *testing.T) {
 	}
 }
 
-func TestConfiguration_NewService_NoConfLoaded(t *testing.T) {
-	os.Setenv("CONFIGURATION_FILE", "application.derp.yaml")
-	os.Args = []string{os.Args[0]}
+func TestConfiguration_NewService_NoName(t *testing.T) {
+	os.Args = []string{os.Args[0], "--configuration_file=application.noname.yaml"}
 	cmd.DefaultCmd = cmd.NewCmd()
-	service := NewService("1.1.1", func(conf *Configuration) error { return nil })
+
+	service := NewService("1.1.1", "defaultname", errInit)
+
+	err := service.Run()
+
+	if err != nil && err.Error() != errInit(nil).Error() {
+		t.Errorf("Error not set to nil, message is: %s", err)
+	}
+}
+
+func TestConfiguration_NewService_NoName_NoDefault(t *testing.T) {
+	os.Args = []string{os.Args[0], "--configuration_file=application.noname.yaml"}
+	cmd.DefaultCmd = cmd.NewCmd()
+
+	service := NewService("1.1.1", "", errInit)
+
+	err := service.Run()
+
+	if err == nil {
+		t.Errorf("Error not set to nil, message is: %s", err)
+	}
+}
+
+func TestConfiguration_NewService_NoConfLoaded(t *testing.T) {
+	os.Args = []string{os.Args[0], "--configuration_file=application.derp.yaml"}
+	cmd.DefaultCmd = cmd.NewCmd()
+
+	service := NewService("1.1.1", "defaultName", NilInit)
+
 	err := service.Run()
 	if err == nil {
 		if _, ok := service.(micro.Service); ok {
@@ -39,10 +65,11 @@ func TestConfiguration_NewService_NoConfLoaded(t *testing.T) {
 }
 
 func TestConfiguration_NewService_NilInit(t *testing.T) {
-	os.Setenv("CONFIGURATION_FILE", "application.derp.yaml")
-	os.Args = []string{os.Args[0]}
+	os.Args = []string{os.Args[0], "--configuration_file=application.derp.yaml"}
 	cmd.DefaultCmd = cmd.NewCmd()
-	service := NewService("1.1.1", NilInit)
+
+	service := NewService("1.1.1", "defaultName", NilInit)
+
 	err := service.Run()
 	if err == nil {
 		if _, ok := service.(micro.Service); ok {
@@ -56,7 +83,9 @@ func TestNewService_WithBlankConfigurationEnvVar(t *testing.T) {
 	os.Setenv("CONFIGURATION_FILE", "")
 	os.Args = []string{os.Args[0]}
 	cmd.DefaultCmd = cmd.NewCmd()
-	service := NewService("1.1.1", NilInit)
+
+	service := NewService("1.1.1", "defaultName", NilInit)
+
 	err := service.Run()
 	if err == nil {
 		t.Error("Expected an error but received nil.")
