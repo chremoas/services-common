@@ -113,3 +113,20 @@ func TestConfiguration_Load_NoNamespace(t *testing.T) {
 		t.Error("Namespace not set to a default")
 	}
 }
+
+func TestConfiguration_IsInitialized_NotInitialized(t *testing.T) {
+	conf := Configuration{}
+
+	if conf.IsInitialized() {
+		t.Error("Configuration was initialized after construction?  Really?")
+	}
+}
+
+func TestConfiguration_IsInitialized(t *testing.T) {
+	conf := Configuration{}
+	conf.Load("application.dist.yaml")
+
+	if !conf.IsInitialized() {
+		t.Error("Nothing was even validated... should have been initialized!")
+	}
+}

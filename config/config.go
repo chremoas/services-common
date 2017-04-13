@@ -75,3 +75,7 @@ func (c *Configuration) Load(filename string) error {
 
 	return nil
 }
+
+func (c *Configuration) IsInitialized() bool {
+	return c.initialized
+}
