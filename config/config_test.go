@@ -79,6 +79,30 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.Registry.Port == 0 {
 		t.Error("Registry.Port unset")
 	}
+	if conf.Registry.RegisterTTL == 0 {
+		t.Error("Registry.RegisterTTL unset")
+	}
+	if conf.Registry.RegisterInterval == 0 {
+		t.Error("Registry.RegisterInterval unset")
+	}
+	if len(conf.Inputs) != 2 {
+		t.Error("Inputs unset")
+	}
+	if conf.Chat.Slack.Token != "123456" {
+		t.Error("Chat.Slack.Token unset")
+	}
+	if !conf.Chat.Slack.Debug {
+		t.Error("Chat.Slack.Debug unset")
+	}
+	if conf.Chat.Discord.Token != "Bot 123456" {
+		t.Error("Chat.Discord.Token unset")
+	}
+	if len(conf.Chat.Discord.WhiteList) != 3 {
+		t.Error("Chat.Discord.WhiteList unset")
+	}
+	if conf.Chat.Discord.Prefix != "!" {
+		t.Error("Chat.Discord.WhiteList unset")
+	}
 }
 
 func TestConfiguration_Load_NoFile(t *testing.T) {

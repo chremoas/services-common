@@ -28,3 +28,19 @@ discord:
 registry:
   hostname: localhost
   port: 8500
+  registerTtl: 20
+  registerInterval: 20
+inputs:
+  - slack
+  - discord
+chat:
+  slack:
+    debug: true
+    token: 123456
+  discord:
+    token: Bot 123456
+    whiteList:
+    - "1234567890"
+    - "2234567890"
+    - "3234567890"
+    prefix: "!"
