@@ -50,9 +50,23 @@ type Configuration struct {
 		InviteUrl string `yaml:"inviteUrl"`
 	} `yaml:"discord"`
 	Registry struct {
-		Hostname string `yaml:"hostname"`
-		Port     int    `yaml:"port"`
+		Hostname         string `yaml:"hostname"`
+		Port             int    `yaml:"port"`
+		RegisterTTL      int    `yaml:"registerTtl"`
+		RegisterInterval int    `yaml:"registerInterval"`
 	} `yaml:"registry"`
+	Inputs []string `yaml:"inputs"`
+	Chat   struct {
+		Slack struct {
+			Debug bool   `yaml:"debug"`
+			Token string `yaml:"token"`
+		} `yaml:"slack"`
+		Discord struct {
+			Token     string   `yaml:"token"`
+			WhiteList []string `yaml:"whiteList"`
+			Prefix    string   `yaml:"prefix"`
+		} `yaml:"discord"`
+	} `yaml:"chat"`
 }
 
 func (c *Configuration) Load(filename string) error {
@@ -74,4 +88,8 @@ func (c *Configuration) Load(filename string) error {
 	c.initialized = true
 
 	return nil
+}
+
+func (c *Configuration) IsInitialized() bool {
+	return c.initialized
 }
