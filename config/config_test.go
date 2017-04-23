@@ -67,7 +67,7 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.Bot.AuthSrvNamespace != "namespace that the auth-srv instance lives in" {
 		t.Error("Bot.AuthSrvNamespace unset")
 	}
-	if conf.Bot.BotToken != "You bot token here, do not prepend Bot... we'll do that for you" {
+	if conf.Bot.BotToken != "You'r bot token here, do not prepend Bot... we'll do that for you" {
 		t.Error("Bot.BotToken unset")
 	}
 	if conf.Discord.InviteUrl != "url to be used for invitations" {

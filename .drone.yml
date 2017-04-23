@@ -6,4 +6,4 @@ pipeline:
       - export PATH=$PATH:$GOPATH/bin
       - go get -t -v ./...
       - go get github.com/mattn/goveralls
-      - goveralls -service=drone.io -repotoken=${REPOTOKEN}
+      - goveralls -service=drone.io  -ignore=proto/common.pb.go -repotoken=${REPOTOKEN}
