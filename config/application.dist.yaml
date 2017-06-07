@@ -17,6 +17,8 @@ bot:
 oauth:
   clientId: client_id
   clientSecret: client_secret
+  callBackProtocol: https
+  callBackHost: callback_host
   callBackUrl: callback_url
 net:
   listenHost: localhost

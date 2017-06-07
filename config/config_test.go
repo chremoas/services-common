@@ -49,6 +49,12 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.OAuth.ClientSecret != "client_secret" {
 		t.Error("OAuth.ClientSecret unset")
 	}
+	if conf.OAuth.CallBackProtocol != "https" {
+		t.Error("OAuth.CallBackProtocol unset")
+	}
+	if conf.OAuth.CallBackHost != "callback_host" {
+		t.Error("OAuth.CallBackHost unset")
+	}
 	if conf.OAuth.CallBackUrl != "callback_url" {
 		t.Error("OAuth.CallBackUrl unset")
 	}

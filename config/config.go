@@ -18,7 +18,7 @@ type Configuration struct {
 	initialized bool
 	Namespace   string
 	Name        string
-	Database    struct {
+	Database struct {
 		Driver         string
 		Protocol       string
 		Host           string
@@ -35,9 +35,11 @@ type Configuration struct {
 		DiscordServerId  string `yaml:"discordServerId"`
 	}
 	OAuth struct {
-		ClientId     string `yaml:"clientId"`
-		ClientSecret string `yaml:"clientSecret"`
-		CallBackUrl  string `yaml:"callBackUrl"`
+		ClientId         string `yaml:"clientId"`
+		ClientSecret     string `yaml:"clientSecret"`
+		CallBackProtocol string `yaml:"callBackProtocol"`
+		CallBackHost     string `yaml:"callBackHost"`
+		CallBackUrl      string `yaml:"callBackUrl"`
 	} `yaml:"oauth"`
 	Net struct {
 		ListenHost string `yaml:"listenHost"`
@@ -56,7 +58,7 @@ type Configuration struct {
 		RegisterInterval int    `yaml:"registerInterval"`
 	} `yaml:"registry"`
 	Inputs []string `yaml:"inputs"`
-	Chat   struct {
+	Chat struct {
 		Slack struct {
 			Debug bool   `yaml:"debug"`
 			Token string `yaml:"token"`
