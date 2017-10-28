@@ -18,7 +18,7 @@ type Configuration struct {
 	initialized bool
 	Namespace   string
 	Name        string
-	Database struct {
+	Database    struct {
 		Driver         string
 		Protocol       string
 		Host           string
@@ -58,7 +58,7 @@ type Configuration struct {
 		RegisterInterval int    `yaml:"registerInterval"`
 	} `yaml:"registry"`
 	Inputs []string `yaml:"inputs"`
-	Chat struct {
+	Chat   struct {
 		Slack struct {
 			Debug bool   `yaml:"debug"`
 			Token string `yaml:"token"`
