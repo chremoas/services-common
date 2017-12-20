@@ -5,6 +5,7 @@ import (
 	"github.com/micro/go-micro"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"fmt"
 )
 
 type Config interface {
@@ -94,4 +95,8 @@ func (c *Configuration) Load(filename string) error {
 
 func (c *Configuration) IsInitialized() bool {
 	return c.initialized
+}
+
+func (c *Configuration) lookupService(serviceType string, serviceName string) (serviceFullName string) {
+	return fmt.Sprintf("%s.%s.%s", c.Namespace, serviceType, serviceName)
 }
