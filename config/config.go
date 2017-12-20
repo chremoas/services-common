@@ -97,6 +97,6 @@ func (c *Configuration) IsInitialized() bool {
 	return c.initialized
 }
 
-func (c *Configuration) lookupService(serviceType string, serviceName string) (serviceFullName string) {
+func (c *Configuration) LookupService(serviceType string, serviceName string) (serviceFullName string) {
 	return fmt.Sprintf("%s.%s.%s", c.Namespace, serviceType, serviceName)
 }
