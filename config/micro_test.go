@@ -12,7 +12,7 @@ func TestConfiguration_NewService(t *testing.T) {
 	os.Args = []string{os.Args[0], "--configuration_file=application.dist.yaml"}
 	cmd.DefaultCmd = cmd.NewCmd()
 
-	service := NewService("1.1.1", "defaultName", errInit)
+	service := NewService("1.1.1", "defaultType", "defaultName", errInit)
 	if _, ok := service.(micro.Service); !ok {
 		t.Error("service is not a micro.Service!")
 	}
@@ -27,7 +27,7 @@ func TestConfiguration_NewService_NoName(t *testing.T) {
 	os.Args = []string{os.Args[0], "--configuration_file=application.noname.yaml"}
 	cmd.DefaultCmd = cmd.NewCmd()
 
-	service := NewService("1.1.1", "defaultname", errInit)
+	service := NewService("1.1.1", "defaultType", "defaultname", errInit)
 
 	err := service.Run()
 
@@ -40,7 +40,7 @@ func TestConfiguration_NewService_NoName_NoDefault(t *testing.T) {
 	os.Args = []string{os.Args[0], "--configuration_file=application.noname.yaml"}
 	cmd.DefaultCmd = cmd.NewCmd()
 
-	service := NewService("1.1.1", "", errInit)
+	service := NewService("1.1.1", "defaultType", "", errInit)
 
 	err := service.Run()
 
@@ -53,7 +53,7 @@ func TestConfiguration_NewService_NoConfLoaded(t *testing.T) {
 	os.Args = []string{os.Args[0], "--configuration_file=application.derp.yaml"}
 	cmd.DefaultCmd = cmd.NewCmd()
 
-	service := NewService("1.1.1", "defaultName", NilInit)
+	service := NewService("1.1.1", "defaultType", "defaultName", NilInit)
 
 	err := service.Run()
 	if err == nil {
@@ -68,7 +68,7 @@ func TestConfiguration_NewService_NilInit(t *testing.T) {
 	os.Args = []string{os.Args[0], "--configuration_file=application.derp.yaml"}
 	cmd.DefaultCmd = cmd.NewCmd()
 
-	service := NewService("1.1.1", "defaultName", NilInit)
+	service := NewService("1.1.1", "defaultType", "defaultName", NilInit)
 
 	err := service.Run()
 	if err == nil {
@@ -84,7 +84,7 @@ func TestNewService_WithBlankConfigurationEnvVar(t *testing.T) {
 	os.Args = []string{os.Args[0]}
 	cmd.DefaultCmd = cmd.NewCmd()
 
-	service := NewService("1.1.1", "defaultName", NilInit)
+	service := NewService("1.1.1", "defaultType", "defaultName", NilInit)
 
 	err := service.Run()
 	if err == nil {
