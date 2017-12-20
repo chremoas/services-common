@@ -13,9 +13,6 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.Namespace != "your.namespace.to.register" {
 		t.Error("Namespace unset")
 	}
-	if conf.Name != "yourappname" {
-		t.Error("Name unset")
-	}
 	if conf.Database.Driver != "mysql" {
 		t.Error("Database.Driver unset")
 	}
@@ -64,14 +61,8 @@ func TestConfiguration_Load(t *testing.T) {
 	if conf.Net.ListenPort != 80 {
 		t.Error("Net.ListenPort unset")
 	}
-	if conf.ServiceNames.AuthSrv != "auth-srv" {
-		t.Error("ServiceNames.AuthSrv unset")
-	}
 	if conf.Bot.DiscordServerId != "https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-server-ID-" {
 		t.Error("Bot.DiscordServerId unset")
-	}
-	if conf.Bot.AuthSrvNamespace != "namespace that the auth-srv instance lives in" {
-		t.Error("Bot.AuthSrvNamespace unset")
 	}
 	if conf.Bot.BotToken != "You'r bot token here, do not prepend Bot... we'll do that for you" {
 		t.Error("Bot.BotToken unset")
