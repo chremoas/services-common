@@ -18,7 +18,6 @@ type Config interface {
 type Configuration struct {
 	initialized bool
 	Namespace   string
-	Name        string
 	Database    struct {
 		Driver         string
 		Protocol       string
@@ -32,7 +31,6 @@ type Configuration struct {
 	}
 	Bot struct {
 		BotToken         string `yaml:"botToken"`
-		AuthSrvNamespace string `yaml:"authSrvNamespace"`
 		DiscordServerId  string `yaml:"discordServerId"`
 	}
 	OAuth struct {
@@ -46,9 +44,6 @@ type Configuration struct {
 		ListenHost string `yaml:"listenHost"`
 		ListenPort int    `yaml:"listenPort"`
 	}
-	ServiceNames struct {
-		AuthSrv string `yaml:"authSrv"`
-	} `yaml:"serviceNames"`
 	Discord struct {
 		InviteUrl string `yaml:"inviteUrl"`
 	} `yaml:"discord"`

@@ -18,7 +18,7 @@ var confFile string
 // into the services options as a BeforeStart which will be called DURING the service.Run invocation but BEFORE the
 // service is fully up and operational.  All of your initialization code that you need should go into this initFunc.
 // If you don't need init code then feel free to use the NilInit function exported out of this package.
-func NewService(version, defaultName string, initFunc InitFunc) micro.Service {
+func NewService(version, serviceType string, serviceName string, initFunc InitFunc) micro.Service {
 	service := micro.NewService(
 		micro.Version(version),
 		micro.BeforeStart(
@@ -33,16 +33,19 @@ func NewService(version, defaultName string, initFunc InitFunc) micro.Service {
 					return err
 				}
 
-				if conf.Name == "" {
-					if defaultName == "" {
-						err := errors.New("No name in configuration yaml and no default name")
-						log.Error(err)
-						return err
-					}
-					conf.Name = defaultName
+				if serviceType == "" {
+					err := errors.New("serviceType is required")
+					log.Error(err)
+					return err
 				}
 
-				svc.Init(micro.Name(conf.Namespace + "." + conf.Name))
+				if serviceName == "" {
+					err := errors.New("serviceName is required")
+					log.Error(err)
+					return err
+				}
+
+				svc.Init(micro.Name(conf.LookupService(serviceType, serviceName)))
 				svc.Init(
 					micro.Registry(
 						registry.NewRegistry(
