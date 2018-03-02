@@ -13,6 +13,7 @@ type Config interface {
 	NewConnectionString() (string, error)
 	NewService(version, defaultName string) (micro.Service, error)
 	AuthServiceName() (string, error)
+	LookupService(serviceType string, serviceName string) (serviceFullName string)
 }
 
 type Configuration struct {
