@@ -2,10 +2,10 @@ package config
 
 import (
 	"errors"
+	"fmt"
 	"github.com/micro/go-micro"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	"fmt"
 )
 
 type Config interface {
@@ -30,9 +30,15 @@ type Configuration struct {
 		Options        string
 		MaxConnections int `yaml:"maxConnections"`
 	}
+	Redis struct {
+		Host     string
+		Port     uint
+		Password string
+		Database int
+	}
 	Bot struct {
-		BotToken         string `yaml:"botToken"`
-		DiscordServerId  string `yaml:"discordServerId"`
+		BotToken        string `yaml:"botToken"`
+		DiscordServerId string `yaml:"discordServerId"`
 	}
 	OAuth struct {
 		ClientId         string `yaml:"clientId"`
