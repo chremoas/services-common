@@ -33,11 +33,11 @@ func (set *StringSet) FromSlice(slice []string) {
 	}
 }
 
-func (set *StringSet) Intersection(slice1 *StringSet, slice2 *StringSet) *StringSet {
+func (set *StringSet) Intersection(set1 *StringSet) *StringSet {
 	var output = NewStringSet()
 
-	for s := range slice1.set {
-		if slice2.Contains(s) {
+	for s := range set.set {
+		if set1.Contains(s) {
 			output.Add(s)
 		}
 	}
@@ -45,11 +45,11 @@ func (set *StringSet) Intersection(slice1 *StringSet, slice2 *StringSet) *String
 	return output
 }
 
-func (set *StringSet) Difference(slice1 *StringSet, slice2 *StringSet) *StringSet {
+func (set *StringSet) Difference(set1 *StringSet) *StringSet {
 	var output = NewStringSet()
 
-	for s := range slice1.set {
-		if !slice2.Contains(s) {
+	for s := range set.set {
+		if !set1.Contains(s) {
 			output.Add(s)
 		}
 	}

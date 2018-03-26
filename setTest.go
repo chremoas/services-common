@@ -16,7 +16,7 @@ func main() {
 	set2.Add("String3")
 	set2.Add("String4")
 
-	fmt.Println(set1.Intersection(set1, set2))
-	fmt.Println(set1.Difference(set1, set2))
-	fmt.Println(set1.Difference(set2, set1))
+	fmt.Println(set1.Intersection(set2))
+	fmt.Println(set1.Difference(set2))
+	fmt.Println(set2.Difference(set1))
 }
