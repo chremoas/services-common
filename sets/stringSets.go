@@ -1,7 +1,7 @@
 package sets
 
 type StringSet struct {
-	set map[string]bool
+	Set map[string]bool
 }
 
 func NewStringSet() *StringSet {
@@ -9,22 +9,22 @@ func NewStringSet() *StringSet {
 }
 
 func (set *StringSet) Add(s string) bool {
-	_, found := set.set[s]
-	set.set[s] = true
+	_, found := set.Set[s]
+	set.Set[s] = true
 	return !found
 }
 
 func (set *StringSet) Remove(s string) {
-	delete(set.set, s)
+	delete(set.Set, s)
 }
 
 func (set *StringSet) Contains(s string) bool {
-	_, found := set.set[s]
+	_, found := set.Set[s]
 	return found
 }
 
 func (set *StringSet) Size() int {
-	return len(set.set)
+	return len(set.Set)
 }
 
 func (set *StringSet) FromSlice(slice []string) {
@@ -36,7 +36,7 @@ func (set *StringSet) FromSlice(slice []string) {
 func (set *StringSet) Intersection(set1 *StringSet) *StringSet {
 	var output = NewStringSet()
 
-	for s := range set.set {
+	for s := range set.Set {
 		if set1.Contains(s) {
 			output.Add(s)
 		}
@@ -48,7 +48,7 @@ func (set *StringSet) Intersection(set1 *StringSet) *StringSet {
 func (set *StringSet) Difference(set1 *StringSet) *StringSet {
 	var output = NewStringSet()
 
-	for s := range set.set {
+	for s := range set.Set {
 		if !set1.Contains(s) {
 			output.Add(s)
 		}
