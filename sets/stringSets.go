@@ -33,6 +33,14 @@ func (set *StringSet) FromSlice(slice []string) {
 	}
 }
 
+func (set *StringSet) ToSlice() (slice []string) {
+	for s := range set.Set {
+		slice = append(slice, s)
+	}
+
+	return slice
+}
+
 func (set *StringSet) Intersection(set1 *StringSet) *StringSet {
 	var output = NewStringSet()
 
