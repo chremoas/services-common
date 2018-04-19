@@ -72,6 +72,7 @@ type Configuration struct {
 			Prefix    string   `yaml:"prefix"`
 		} `yaml:"discord"`
 	} `yaml:"chat"`
+	Extensions map[interface{}]interface{} `yaml:"extensions"`
 }
 
 func (c *Configuration) Load(filename string) error {

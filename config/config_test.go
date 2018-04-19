@@ -151,3 +151,24 @@ func TestConfiguration_IsInitialized(t *testing.T) {
 		t.Error("Nothing was even validated... should have been initialized!")
 	}
 }
+
+func TestConfiguration_ExtensionsLoaded(t *testing.T) {
+	conf := Configuration{}
+	conf.Load("application.with-extensions.yaml")
+
+	if !conf.IsInitialized() {
+		t.Error("Nothing was even validated... should have been initialized!")
+	}
+
+	if conf.Extensions == nil {
+		t.Error("No extensions loaded.")
+	}
+
+	if conf.Extensions["mongoDb"].(map[interface{}]interface{})["host"].(string) != "localhost" {
+		t.Error("mongoDb.host was not set")
+	}
+
+	if conf.Extensions["mongoDb"].(map[interface{}]interface{})["port"] != 1234 {
+		t.Error("mongoDb.port was not set")
+	}
+}
