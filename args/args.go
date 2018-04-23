@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	proto "github.com/chremoas/chremoas/proto"
-	common "github.com/chremoas/services-common/command"
 	"golang.org/x/net/context"
 )
 
@@ -41,7 +40,7 @@ func (a Args) Exec(ctx context.Context, req *proto.ExecRequest, rsp *proto.ExecR
 		if ok {
 			response = f.Funcptr(ctx, req)
 		} else {
-			response = common.SendError(fmt.Sprintf("Not a valid subcommand: %s", req.Args[1]))
+			return fmt.Errorf("not a valid subcommand: %s", req.Args[1])
 		}
 	}
 
