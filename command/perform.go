@@ -6,6 +6,7 @@ import (
 	"context"
 )
 
+// Should perform.go setup its own client?
 type Permissions struct {
 	Client permsrv.PermissionsClient
 }
