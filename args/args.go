@@ -33,7 +33,7 @@ func (a *Args) Add(name string, command *Command) {
 func (a Args) Exec(ctx context.Context, req *proto.ExecRequest, rsp *proto.ExecResponse) error {
 	var response string
 
-	if req.Args[1] == "help" {
+	if len(req.Args) == 1 || req.Args[1] == "help" {
 		response = a.help()
 	} else {
 		f, ok := a.argMap[req.Args[1]]
