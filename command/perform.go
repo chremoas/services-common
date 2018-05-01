@@ -8,7 +8,7 @@ import (
 
 // Should perform.go setup its own client?
 type Permissions struct {
-	Client          permsrv.PermissionsClient
+	Client          permsrv.PermissionsService
 	PermissionsList []string
 }
 
