@@ -70,6 +70,8 @@ func NewService(version, serviceType string, serviceName string, initFunc InitFu
 		),
 	)
 
+	service.Options()
+
 	service.Init()
 
 	svc = service
