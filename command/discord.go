@@ -2,8 +2,6 @@ package command
 
 import "fmt"
 
-
-
 func makeString(message string, sender string, sign string) string {
 	var output string
 
