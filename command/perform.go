@@ -12,6 +12,13 @@ type Permissions struct {
 	PermissionsList []string
 }
 
+func NewPermission(client permsrv.PermissionsService, permissionsList []string) *Permissions {
+	// TODO: Check to make sure the permissions exist and if not, create them
+	//perms, _ := client.ListPermissions(context.Background(), &permsrv.NilRequest{})
+
+	return &Permissions{Client: client, PermissionsList: permissionsList}
+}
+
 func (p Permissions) CanPerform(ctx context.Context, sender string) (bool, error) {
 	s := strings.Split(sender, ":")
 	canPerform, err := p.Client.Perform(ctx,
