@@ -9,6 +9,9 @@ func NewStringSet() *StringSet {
 }
 
 func (set *StringSet) Add(s string) bool {
+	if len(s) == 0 {
+		return false
+	}
 	_, found := set.Set[s]
 	set.Set[s] = true
 	return !found

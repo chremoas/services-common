@@ -37,8 +37,10 @@ type Configuration struct {
 		Database int
 	}
 	Bot struct {
-		BotToken        string `yaml:"botToken"`
-		DiscordServerId string `yaml:"discordServerId"`
+		BotToken        string   `yaml:"botToken"`
+		DiscordServerId string   `yaml:"discordServerId"`
+		BotRole         string   `yaml:"botRole"`
+		IgnoredRoles    []string `yaml:"ignoredRoles"`
 	}
 	OAuth struct {
 		ClientId         string `yaml:"clientId"`
