@@ -26,7 +26,7 @@ func (set *StringSet) Contains(s string) bool {
 	return found
 }
 
-func (set *StringSet) Size() int {
+func (set *StringSet) Len() int {
 	return len(set.Set)
 }
 
