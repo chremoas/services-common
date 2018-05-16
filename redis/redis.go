@@ -1,7 +1,6 @@
 package chremoas_redis
 
 import (
-	//"encoding/json"
 	"fmt"
 	"github.com/go-redis/redis"
 )
