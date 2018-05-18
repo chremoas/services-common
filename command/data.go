@@ -1,12 +1,15 @@
 package command
 
-import "regexp"
+import (
+	"regexp"
+)
 
 func IsDiscordUser(user string) bool {
-	var discordUser = regexp.MustCompile(`<@\d*>`)
+	var discordUser = regexp.MustCompile(`<@!?\d*>`)
 	return discordUser.MatchString(user)
 }
 
 func ExtractUserId(user string) string {
-	return user[2 : len(user)-1]
+	var discordUser = regexp.MustCompile(`^(<@!?)(\d+)`)
+	return discordUser.FindStringSubmatch(user)[2]
 }
