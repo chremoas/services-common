@@ -10,9 +10,6 @@ func IsDiscordUser(user string) bool {
 }
 
 func ExtractUserId(user string) string {
-	var discordUser = regexp.MustCompile(`^(<@!?)(\d+)`)
+	var discordUser = regexp.MustCompile(`^(<@!+)(\d+)`)
 	return discordUser.FindStringSubmatch(user)[2]
 }
-
-
-
