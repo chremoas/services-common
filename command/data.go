@@ -13,3 +13,6 @@ func ExtractUserId(user string) string {
 	var discordUser = regexp.MustCompile(`^(<@!?)(\d+)`)
 	return discordUser.FindStringSubmatch(user)[2]
 }
+
+
+
