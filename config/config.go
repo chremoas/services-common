@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/micro/go-micro"
 	"github.com/spf13/viper"
+	_ "github.com/spf13/viper/remote"
 )
 
 type Config interface {
@@ -76,14 +77,33 @@ type Configuration struct {
 }
 
 func (c *Configuration) Load(filename string) error {
+	var fileRead, remoteRead bool
+	var fileReadErr, remoteReadErr error
+
 	viper.SetConfigFile(filename)
 
-	if err := viper.ReadInConfig(); err != nil {
-		return fmt.Errorf("Error reading config file, %s", err)
+	if fileReadErr = viper.ReadInConfig(); fileReadErr == nil {
+		fileRead = true
 	}
 
-	err := viper.Unmarshal(&c)
-	if err != nil {
+	viper.BindEnv("consul")
+	consul := viper.Get("consul")
+
+	if consul != nil {
+		// TODO: This is very rigid. Let's find a better way.
+		viper.AddRemoteProvider("consul", consul.(string), "/config/chremoas.yaml")
+		viper.SetConfigType("yaml") // because there is no file extension in a stream of bytes, supported extensions are "json", "toml", "yaml", "yml", "properties", "props", "prop"
+
+		if remoteReadErr = viper.ReadRemoteConfig(); remoteReadErr == nil {
+			remoteRead = true
+		}
+	}
+
+	if fileRead == false && remoteRead == false {
+		return fmt.Errorf("unable to read config:\n\tfile=%v\n\tremote=%v|n", fileReadErr, remoteReadErr)
+	}
+
+	if err := viper.Unmarshal(&c); err != nil {
 		return fmt.Errorf("unable to decode into struct, %v", err)
 	}
 
