@@ -3,9 +3,10 @@ sudo: false
 go:
   - 1.9
 before_install:
-  - echo "would do go get -t ./..."
+  - get -t ./...
 script:
   - echo "do something here maybe"
 before_deploy:
   - export GIT_TAG=$(cat VERSION)
+deploy:
   - echo ${GIT_TAG}
