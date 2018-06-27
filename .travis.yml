@@ -1,0 +1,11 @@
+language: go
+sudo: false
+go:
+  - 1.9
+before_install:
+  - go get -t ./...
+script:
+  - make tag
+before_deploy:
+  - export GIT_TAG=$(cat VERSION)
+  - echo ${GIT_TAG}
