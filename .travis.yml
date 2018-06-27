@@ -9,4 +9,7 @@ script:
 before_deploy:
   - export GIT_TAG=$(cat VERSION)
 deploy:
-  - echo ${GIT_TAG}
+  provider: script
+  script: echo ${GIT_TAG}
+  on:
+    branch: master
