@@ -87,16 +87,17 @@ func (c *Configuration) Load(filename string) error {
 		fileRead = true
 	}
 
-	viper.BindEnv("consul")
-	consul := viper.Get("consul")
+	if err := viper.BindEnv("consul"); err == nil {
+		consul := viper.Get("consul")
 
-	if consul != nil {
-		// TODO: This is very rigid. Let's find a better way.
-		if err := viper.AddRemoteProvider("consul", consul.(string), "/config/chremoas.yaml"); err == nil {
-			viper.SetConfigType("yaml") // because there is no file extension in a stream of bytes, supported extensions are "json", "toml", "yaml", "yml", "properties", "props", "prop"
+		if consul != nil {
+			// TODO: This is very rigid. Let's find a better way.
+			if err := viper.AddRemoteProvider("consul", consul.(string), "/config/chremoas.yaml"); err == nil {
+				viper.SetConfigType("yaml") // because there is no file extension in a stream of bytes, supported extensions are "json", "toml", "yaml", "yml", "properties", "props", "prop"
 
-			if remoteReadErr = viper.ReadRemoteConfig(); remoteReadErr == nil {
-				remoteRead = true
+				if remoteReadErr = viper.ReadRemoteConfig(); remoteReadErr == nil {
+					remoteRead = true
+				}
 			}
 		}
 	}
