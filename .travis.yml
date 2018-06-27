@@ -5,11 +5,11 @@ go:
 before_install:
   - go get -t ./...
 script:
-  - make tag
+  - echo "do something here maybe"
 before_deploy:
-  - docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
+  - export GIT_TAG=$(cat VERSION)
 deploy:
   provider: script
-  script: make publish
+  script: echo ${GIT_TAG}
   on:
-    branch: master
+    branch: travis_tagging
