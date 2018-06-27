@@ -3,7 +3,7 @@ sudo: false
 go:
   - 1.9
 before_install:
-  - get -t ./...
+  - go get -t ./...
 script:
   - echo "do something here maybe"
 before_deploy:
