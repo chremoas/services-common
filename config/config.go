@@ -1,11 +1,9 @@
 package config
 
 import (
-	"errors"
 	"fmt"
 	"github.com/micro/go-micro"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
+	"github.com/spf13/viper"
 )
 
 type Config interface {
@@ -78,14 +76,15 @@ type Configuration struct {
 }
 
 func (c *Configuration) Load(filename string) error {
-	data, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return errors.New("Could not read " + filename + " for configuration data.")
+	viper.SetConfigFile(filename)
+
+	if err := viper.ReadInConfig(); err != nil {
+		return fmt.Errorf("Error reading config file, %s", err)
 	}
 
-	err = yaml.Unmarshal([]byte(data), c)
+	err := viper.Unmarshal(&c)
 	if err != nil {
-		return errors.New("Could not unmarshall " + filename + " as yaml")
+		return fmt.Errorf("unable to decode into struct, %v", err)
 	}
 
 	// Let's set a default namespace because a lot of people don't care what it actually is
