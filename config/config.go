@@ -1,11 +1,11 @@
 package config
 
 import (
-	"errors"
 	"fmt"
 	"github.com/micro/go-micro"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
+	"github.com/spf13/viper"
+	// Import the remote config driver
+	_ "github.com/spf13/viper/remote"
 )
 
 type Config interface {
@@ -78,14 +78,36 @@ type Configuration struct {
 }
 
 func (c *Configuration) Load(filename string) error {
-	data, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return errors.New("Could not read " + filename + " for configuration data.")
+	var fileRead, remoteRead bool
+	var fileReadErr, remoteReadErr error
+
+	viper.SetConfigFile(filename)
+
+	if fileReadErr = viper.ReadInConfig(); fileReadErr == nil {
+		fileRead = true
 	}
 
-	err = yaml.Unmarshal([]byte(data), c)
-	if err != nil {
-		return errors.New("Could not unmarshall " + filename + " as yaml")
+	if err := viper.BindEnv("consul"); err == nil {
+		consul := viper.Get("consul")
+
+		if consul != nil {
+			// TODO: This is very rigid. Let's find a better way.
+			if err := viper.AddRemoteProvider("consul", consul.(string), "/config/chremoas.yaml"); err == nil {
+				viper.SetConfigType("yaml") // because there is no file extension in a stream of bytes, supported extensions are "json", "toml", "yaml", "yml", "properties", "props", "prop"
+
+				if remoteReadErr = viper.ReadRemoteConfig(); remoteReadErr == nil {
+					remoteRead = true
+				}
+			}
+		}
+	}
+
+	if !fileRead && !remoteRead {
+		return fmt.Errorf("unable to read config:\n\tfile=%v\n\tremote=%v|n", fileReadErr, remoteReadErr)
+	}
+
+	if err := viper.Unmarshal(&c); err != nil {
+		return fmt.Errorf("unable to decode into struct, %v", err)
 	}
 
 	// Let's set a default namespace because a lot of people don't care what it actually is
