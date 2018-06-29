@@ -5,7 +5,7 @@ go:
 before_install:
   - go get -t ./...
 script:
-  - make tag
+  - echo Do not actually make anything, just a library
 before_deploy:
   - docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
   - export GIT_TAG=$(cat VERSION)
@@ -16,7 +16,7 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: script
-  script: make publish
+  script: echo Do not actually publish anything, just a library (but need to tag)
   on:
     tags: false
     branch: master
