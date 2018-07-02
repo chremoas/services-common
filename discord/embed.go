@@ -3,11 +3,13 @@ package discord
 // Wrapper to make embeds less of a pain in the ass.
 // Stolen from https://gist.github.com/Necroforger/8b0b70b1a69fa7828b8ad6387ebb3835
 
-import "github.com/bwmarrin/discordgo"
+import (
+	discord "github.com/chremoas/discord-gateway/proto"
+)
 
 //Embed ...
 type Embed struct {
-	*discordgo.MessageEmbed
+	*discord.MessageEmbed
 }
 
 // Constants for message embed character limits
@@ -23,7 +25,7 @@ const (
 
 //NewEmbed returns a new embed object
 func NewEmbed() *Embed {
-	return &Embed{&discordgo.MessageEmbed{}}
+	return &Embed{&discord.MessageEmbed{}}
 }
 
 //SetTitle ...
@@ -51,7 +53,7 @@ func (e *Embed) AddField(name, value string) *Embed {
 		name = name[:1024]
 	}
 
-	e.Fields = append(e.Fields, &discordgo.MessageEmbedField{
+	e.Fields = append(e.Fields, &discord.MessageEmbedField{
 		Name:  name,
 		Value: value,
 	})
@@ -79,7 +81,7 @@ func (e *Embed) SetFooter(args ...string) *Embed {
 		return e
 	}
 
-	e.Footer = &discordgo.MessageEmbedFooter{
+	e.Footer = &discord.MessageEmbedFooter{
 		IconURL:      iconURL,
 		Text:         text,
 		ProxyIconURL: proxyURL,
@@ -102,7 +104,7 @@ func (e *Embed) SetImage(args ...string) *Embed {
 	if len(args) > 1 {
 		proxyURL = args[1]
 	}
-	e.Image = &discordgo.MessageEmbedImage{
+	e.Image = &discord.MessageEmbedImage{
 		URL:      URL,
 		ProxyURL: proxyURL,
 	}
@@ -123,7 +125,7 @@ func (e *Embed) SetThumbnail(args ...string) *Embed {
 	if len(args) > 1 {
 		proxyURL = args[1]
 	}
-	e.Thumbnail = &discordgo.MessageEmbedThumbnail{
+	e.Thumbnail = &discord.MessageEmbedThumbnail{
 		URL:      URL,
 		ProxyURL: proxyURL,
 	}
@@ -155,7 +157,7 @@ func (e *Embed) SetAuthor(args ...string) *Embed {
 		proxyURL = args[3]
 	}
 
-	e.Author = &discordgo.MessageEmbedAuthor{
+	e.Author = &discord.MessageEmbedAuthor{
 		Name:         name,
 		IconURL:      iconURL,
 		URL:          URL,
@@ -172,7 +174,7 @@ func (e *Embed) SetURL(URL string) *Embed {
 }
 
 //SetColor ...
-func (e *Embed) SetColor(clr int) *Embed {
+func (e *Embed) SetColor(clr int64) *Embed {
 	e.Color = clr
 	return e
 }
