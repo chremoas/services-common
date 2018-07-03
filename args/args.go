@@ -7,6 +7,7 @@ import (
 	discordsrv "github.com/chremoas/discord-gateway/proto"
 	"github.com/chremoas/services-common/discord"
 	"golang.org/x/net/context"
+	"strings"
 	"time"
 )
 
@@ -17,6 +18,8 @@ type Args struct {
 	argMap         map[string]*Command
 	argList        []string
 	discordClient  *discordsrv.DiscordGatewayService
+	userId         string
+	channelId      string
 }
 
 type Command struct {
@@ -41,6 +44,10 @@ func (a *Args) Add(name string, command *Command) {
 
 func (a Args) Exec(ctx context.Context, req *proto.ExecRequest, rsp *proto.ExecResponse) error {
 	var response string
+
+	s := strings.Split(req.Sender, ":")
+	a.userId = s[1]
+	a.channelId = s[0]
 
 	if len(req.Args) == 1 || req.Args[1] == "help" {
 		response = a.help()
@@ -73,8 +80,8 @@ func (a Args) help() string {
 	}
 
 	a.discordClient.SendEmbed(&discordsrv.SendMessageEmbed{
-		ChannelID: "uhhh",
-		Message: a.embedHelp(),
+		ChannelID: a.channelId,
+		Message:   a.embedHelp(),
 	})
 
 	return fmt.Sprintf("```%s```", buffer.String())
