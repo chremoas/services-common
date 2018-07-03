@@ -102,6 +102,8 @@ func (a Args) embedHelp() *discordsrv.MessageEmbed {
 	}
 
 	return discord.NewEmbed().
+		SetTitle("Do we need a title?").
+		SetDescription("Do we need a description?").
 		SetAuthor(&discordsrv.MessageEmbedAuthor{
 			Name: fmt.Sprintf("Usage: !%s <subcommand> <arguments>", a.serviceName),
 			URL:  fmt.Sprintf("https://github.com/chremoas/%s/tree/%s", s, a.serviceVersion),
