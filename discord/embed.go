@@ -36,8 +36,8 @@ func (e *Embed) SetTitle(name string) *Embed {
 
 //SetDescription [desc]
 func (e *Embed) SetDescription(description string) *Embed {
-	if len(description) > 2048 {
-		description = description[:2048]
+	if len(description) > EmbedLimitDescription {
+		description = description[:EmbedLimitDescription]
 	}
 	e.Description = description
 	return e
@@ -45,12 +45,12 @@ func (e *Embed) SetDescription(description string) *Embed {
 
 //AddField [name] [value]
 func (e *Embed) AddField(name, value string) *Embed {
-	if len(value) > 1024 {
-		value = value[:1024]
+	if len(value) > EmbedLimitFieldValue {
+		value = value[:EmbedLimitFieldValue]
 	}
 
-	if len(name) > 1024 {
-		name = name[:1024]
+	if len(name) > EmbedLimitFieldName {
+		name = name[:EmbedLimitFieldName]
 	}
 
 	e.Fields = append(e.Fields, &discord.MessageEmbedField{
@@ -63,107 +63,26 @@ func (e *Embed) AddField(name, value string) *Embed {
 }
 
 //SetFooter [Text] [iconURL]
-func (e *Embed) SetFooter(args ...string) *Embed {
-	iconURL := ""
-	text := ""
-	proxyURL := ""
-
-	switch {
-	case len(args) > 2:
-		proxyURL = args[2]
-		fallthrough
-	case len(args) > 1:
-		iconURL = args[1]
-		fallthrough
-	case len(args) > 0:
-		text = args[0]
-	case len(args) == 0:
-		return e
-	}
-
-	e.Footer = &discord.MessageEmbedFooter{
-		IconURL:      iconURL,
-		Text:         text,
-		ProxyIconURL: proxyURL,
-	}
-
+func (e *Embed) SetFooter(footer *discord.MessageEmbedFooter) *Embed {
+	e.Footer = footer
 	return e
 }
 
 //SetImage ...
-func (e *Embed) SetImage(args ...string) *Embed {
-	var URL string
-	var proxyURL string
-
-	if len(args) == 0 {
-		return e
-	}
-	if len(args) > 0 {
-		URL = args[0]
-	}
-	if len(args) > 1 {
-		proxyURL = args[1]
-	}
-	e.Image = &discord.MessageEmbedImage{
-		URL:      URL,
-		ProxyURL: proxyURL,
-	}
+func (e *Embed) SetImage(image *discord.MessageEmbedImage) *Embed {
+	e.Image = image
 	return e
 }
 
 //SetThumbnail ...
-func (e *Embed) SetThumbnail(args ...string) *Embed {
-	var URL string
-	var proxyURL string
-
-	if len(args) == 0 {
-		return e
-	}
-	if len(args) > 0 {
-		URL = args[0]
-	}
-	if len(args) > 1 {
-		proxyURL = args[1]
-	}
-	e.Thumbnail = &discord.MessageEmbedThumbnail{
-		URL:      URL,
-		ProxyURL: proxyURL,
-	}
+func (e *Embed) SetThumbnail(thumbnail *discord.MessageEmbedThumbnail) *Embed {
+	e.Thumbnail = thumbnail
 	return e
 }
 
 //SetAuthor ...
-func (e *Embed) SetAuthor(args ...string) *Embed {
-	var (
-		name     string
-		iconURL  string
-		URL      string
-		proxyURL string
-	)
-
-	if len(args) == 0 {
-		return e
-	}
-	if len(args) > 0 {
-		name = args[0]
-	}
-	if len(args) > 1 {
-		iconURL = args[1]
-	}
-	if len(args) > 2 {
-		URL = args[2]
-	}
-	if len(args) > 3 {
-		proxyURL = args[3]
-	}
-
-	e.Author = &discord.MessageEmbedAuthor{
-		Name:         name,
-		IconURL:      iconURL,
-		URL:          URL,
-		ProxyIconURL: proxyURL,
-	}
-
+func (e *Embed) SetAuthor(author *discord.MessageEmbedAuthor) *Embed {
+	e.Author = author
 	return e
 }
 
@@ -176,6 +95,12 @@ func (e *Embed) SetURL(URL string) *Embed {
 //SetColor ...
 func (e *Embed) SetColor(clr int64) *Embed {
 	e.Color = clr
+	return e
+}
+
+//SetTimestamp ...
+func (e *Embed) SetTimestamp(timestamp string) *Embed {
+	e.Timestamp = timestamp
 	return e
 }
 
