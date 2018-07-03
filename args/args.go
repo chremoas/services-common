@@ -12,14 +12,15 @@ import (
 )
 
 type Args struct {
+	argMap  map[string]*Command
+	argList []string
+
 	serviceName    string
 	serviceType    string
 	serviceVersion string
-	argMap         map[string]*Command
-	argList        []string
-	discordClient  *discordsrv.DiscordGatewayService
-	userId         string
-	channelId      string
+
+	userId    string
+	channelId string
 }
 
 type Command struct {
@@ -27,13 +28,14 @@ type Command struct {
 	Help    string
 }
 
-func NewArg(serviceName, serviceType, serviceVersion string, discordClient *discordsrv.DiscordGatewayService) *Args {
+func NewArg(serviceName, serviceType, serviceVersion string, discordClient discordsrv.DiscordGatewayService) *Args {
 	a := &Args{}
 	a.argMap = make(map[string]*Command)
+
 	a.serviceName = serviceName
 	a.serviceType = serviceType
 	a.serviceVersion = serviceVersion
-	a.discordClient = discordClient
+
 	return a
 }
 
@@ -42,7 +44,7 @@ func (a *Args) Add(name string, command *Command) {
 	a.argMap[name] = command
 }
 
-func (a Args) Exec(ctx context.Context, req *proto.ExecRequest, rsp *proto.ExecResponse) error {
+func (a Args) Exec(ctx context.Context, req *proto.ExecRequest, rsp *proto.ExecResponse) (embed *discordsrv.SendMessageEmbed, err error) {
 	var response string
 
 	s := strings.Split(req.Sender, ":")
@@ -51,17 +53,21 @@ func (a Args) Exec(ctx context.Context, req *proto.ExecRequest, rsp *proto.ExecR
 
 	if len(req.Args) == 1 || req.Args[1] == "help" {
 		response = a.help()
+		embed = &discordsrv.SendMessageEmbed{
+			ChannelID: a.channelId,
+			Message:   a.embedHelp(),
+		}
 	} else {
 		f, ok := a.argMap[req.Args[1]]
 		if ok {
 			response = f.Funcptr(ctx, req)
 		} else {
-			return fmt.Errorf("not a valid subcommand: %s", req.Args[1])
+			return nil, fmt.Errorf("not a valid subcommand: %s", req.Args[1])
 		}
 	}
 
 	rsp.Result = []byte(response)
-	return nil
+	return embed, nil
 }
 
 func (a Args) help() string {
@@ -78,11 +84,6 @@ func (a Args) help() string {
 			))
 		}
 	}
-
-	a.discordClient.SendEmbed(&discordsrv.SendMessageEmbed{
-		ChannelID: a.channelId,
-		Message:   a.embedHelp(),
-	})
 
 	return fmt.Sprintf("```%s```", buffer.String())
 }
@@ -103,9 +104,8 @@ func (a Args) embedHelp() *discordsrv.MessageEmbed {
 	return discord.NewEmbed().
 		SetAuthor(&discordsrv.MessageEmbedAuthor{
 			Name: fmt.Sprintf("Usage: !%s <subcommand> <arguments>", a.serviceName),
-			URL:  fmt.Sprintf("https://github.com/chremoas/%s", s),
+			URL:  fmt.Sprintf("https://github.com/chremoas/%s/tree/%s", s, a.serviceVersion),
 		}).
-		SetDescription("This is a discordgo embed").
 		AddField("Subcommands", buffer.String()).
 		SetFooter(&discordsrv.MessageEmbedFooter{
 			Text:    fmt.Sprintf("Chremoas Chat Bot | %s (%s)", s, a.serviceVersion),
