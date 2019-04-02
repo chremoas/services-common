@@ -5,6 +5,7 @@ import (
 	"github.com/micro/cli"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/registry"
+	"github.com/micro/go-micro/registry/consul"
 	"github.com/prometheus/common/log"
 	"strconv"
 )
@@ -48,7 +49,7 @@ func NewService(version, serviceType string, serviceName string, initFunc InitFu
 				svc.Init(micro.Name(conf.LookupService(serviceType, serviceName)))
 				svc.Init(
 					micro.Registry(
-						registry.NewRegistry(
+						consul.NewRegistry(
 							registry.Addrs(
 								conf.Registry.Hostname + ":" + strconv.Itoa(conf.Registry.Port),
 							),
