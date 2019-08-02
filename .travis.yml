@@ -16,7 +16,7 @@ before_deploy:
 deploy:
   skip_cleanup: true
   provider: script
-  script: echo Do not actually publish anything, just a library (but need to tag)
+  script: echo "Do not actually publish anything, just a library (but need to tag)"
   on:
     tags: false
     branch: master
