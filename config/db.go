@@ -10,7 +10,9 @@ func (c Configuration) NewConnectionString() (string, error) {
 		return "", errors.New("Configuration not initialized, call Load() before calling this.")
 	}
 
-	return c.Database.Username +
+	return c.Database.Driver +
+		"://" +
+		c.Database.Username +
 		":" +
 		c.Database.Password +
 		"@" +
