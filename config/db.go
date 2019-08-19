@@ -16,12 +16,10 @@ func (c Configuration) NewConnectionString() (string, error) {
 		":" +
 		c.Database.Password +
 		"@" +
-		c.Database.Protocol +
-		"(" +
 		c.Database.Host +
 		":" +
 		fmt.Sprintf("%d", c.Database.Port) +
-		")/" +
+		"/" +
 		c.Database.Database +
 		"?" +
 		c.Database.Options, nil
