@@ -34,10 +34,11 @@ type Configuration struct {
 		MaxConnections int `yaml:"maxConnections"`
 	}
 	Redis struct {
-		Host     string
-		Port     uint
-		Password string
-		Database int
+		Host      string
+		Port      uint
+		Password  string
+		Database  int
+		Sentinels []string
 	}
 	Bot struct {
 		BotToken        string   `yaml:"botToken"`
