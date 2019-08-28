@@ -3,6 +3,7 @@ package chremoas_redis
 import (
 	"fmt"
 	"github.com/go-redis/redis"
+	"github.com/spf13/viper"
 )
 
 type Client struct {
@@ -10,26 +11,23 @@ type Client struct {
 	Prefix string
 }
 
-type Servers struct {
-	Host      string
-	Sentinels []string
-}
-
 var Nil = redis.Nil
 
-func Init(servers Servers, password string, db int, prefix string) *Client {
+func Init(prefix string) *Client {
 	var c *redis.Client
 
-	if servers.Sentinels != nil {
+	if viper.GetStringSlice("redis.sentinels") != nil {
 		c = redis.NewFailoverClient(&redis.FailoverOptions{
-			MasterName:    "master",
-			SentinelAddrs: servers.Sentinels,
+			MasterName:    viper.GetString("redis.sentinelMasterName"),
+			SentinelAddrs: viper.GetStringSlice("redis.sentinels"),
 		})
 	} else {
 		c = redis.NewClient(&redis.Options{
-			Addr:     servers.Host,
-			Password: password, // no password set
-			DB:       db,       // use default DB
+			Addr: fmt.Sprintf("%s:%d",
+				viper.GetString("redis.host"),
+				viper.GetInt("redis.port")),
+			Password: viper.GetString("redis.password"), // no password set
+			DB:       viper.GetInt("redis.database"),    // use default DB
 		})
 	}
 
