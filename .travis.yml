@@ -1,7 +1,7 @@
 language: go
 sudo: false
 go:
-  - 1.13beta1
+  - 1.14
 script:
   - echo Do not actually make anything, just a library
 before_deploy:
