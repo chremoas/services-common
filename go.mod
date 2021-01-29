@@ -12,6 +12,7 @@ require (
 	github.com/micro/cli v0.2.0
 	github.com/micro/go-micro v1.9.1
 	github.com/nats-io/nats-server/v2 v2.0.2 // indirect
+	github.com/prometheus/client_golang v1.1.0
 	github.com/prometheus/common v0.6.0
 	github.com/spf13/viper v1.4.0
 	go.uber.org/zap v1.10.0
